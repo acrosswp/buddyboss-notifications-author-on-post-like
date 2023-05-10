@@ -89,8 +89,6 @@ final class Notifications_On_Post_Like_For_BuddyBoss {
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->load_hooks();
-
-		// add_action( 'plugins_loaded', array( $this, 'load_hooks' ) );
 	}
 
 	/**
@@ -155,7 +153,6 @@ final class Notifications_On_Post_Like_For_BuddyBoss {
 		 * @since    1.0.0
 		 */
 		if( apply_filters( 'notifications-on-post-like-for-buddyboss-load', true ) ) {
-			$this->define_admin_hooks();
 			$this->define_public_hooks();
 		}
 
@@ -204,11 +201,6 @@ final class Notifications_On_Post_Like_For_BuddyBoss {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-notifications-on-post-like-for-buddyboss-i18n.php';
 
 		/**
-		 * The class responsible for defining all actions that occur in the admin area.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-notifications-on-post-like-for-buddyboss-admin.php';
-
-		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
@@ -232,22 +224,6 @@ final class Notifications_On_Post_Like_For_BuddyBoss {
 		$plugin_i18n = new Notifications_On_Post_Like_For_BuddyBoss_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
-	}
-
-	/**
-	 * Register all of the hooks related to the admin area functionality
-	 * of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function define_admin_hooks() {
-
-		$plugin_admin = new Notifications_On_Post_Like_For_BuddyBoss_Admin( $this->get_plugin_name(), $this->get_version() );
-
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
 	}
 
