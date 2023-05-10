@@ -108,6 +108,8 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 			
 			return $return;
 		}	
+
+		return $action;
 	}
 
 	/**
