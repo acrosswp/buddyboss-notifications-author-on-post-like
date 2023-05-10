@@ -34,6 +34,15 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 	private $plugin_name;
 
 	/**
+	 * The Custom ID of this plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $plugin_name    The Custom ID of this plugin.
+	 */
+	private $plugin_name_action;
+
+	/**
 	 * The version of this plugin.
 	 *
 	 * @since    1.0.0
@@ -52,6 +61,7 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
+		$this->plugin_name_action = $plugin_name . '_action';
 		$this->version = $version;
 
 	}
@@ -70,7 +80,7 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 		}
 
 		// Add 'npplfb_user_like' component to registered components array
-		array_push( $component_names, 'npplfb_user_like' );
+		array_push( $component_names, $this->plugin_name );
 
 		// Return component's with 'npplfb_user_like' appended
 		return $component_names;
@@ -84,7 +94,7 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 	function format_notifications( $action, $item_id, $secondary_item_id, $total_items, $format = 'string' ) {
 
 		// New custom notifications
-		if ( 'npplfb_user_like_action' === $action ) {
+		if ( $this->plugin_name_action === $action ) {
 		
 			$activity = new BP_Activity_Activity( $item_id );
 
@@ -126,8 +136,8 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 		bp_notifications_add_notification( array(
 			'user_id'           => $author_id,
 			'item_id'           => $activity_id,
-			'component_name'    => 'npplfb_user_like',
-			'component_action'  => 'npplfb_user_like_action',
+			'component_name'    => $this->plugin_name,
+			'component_action'  => $this->plugin_name_action,
 			'date_notified'     => bp_core_current_time(),
 			'is_new'            => 1,
 		) );
