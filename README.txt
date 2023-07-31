@@ -1,6 +1,6 @@
 === Notifications On Post Like For BuddyBoss ===
 Contributors: acrosswp, raftaar1191
-Tags: , buddyboss-platform, buddyboss, like-notifications
+Tags: , buddyboss-platform, network-search, global-search, sorting
 Donate link: https://acrosswp.com/
 Requires at least: 6.0
 Tested up to: 6.2
@@ -9,11 +9,11 @@ Stable tag: 1.0.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Notifications to the Post author on there Post Like by Someone For BuddyBoss by AcrossWP
+Giving Admin user to Sorting section in Network Search
 
 == Description ==
 
-Notifications to the Post author on there Post Like by Someone For BuddyBoss by AcrossWP
+Giving Admin user to Sorting section in Network Search
 
 
 == Installation ==
