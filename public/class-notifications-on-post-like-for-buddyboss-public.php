@@ -98,8 +98,7 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 		
 			$activity = new BP_Activity_Activity( $item_id );
 
-			$author_id = $activity->user_id;
-			$name = bp_core_get_username( $author_id );
+			$name = bp_core_get_user_displayname( $secondary_item_id );
 		
 			$custom_text = $custom_title = $name . ' liked on the post ' . get_the_title( $activity_id );
 			$custom_link  = bp_activity_get_permalink( $item_id );
@@ -130,17 +129,22 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 	function custom_add_notification( $activity_id, $user_id ) {
 
 		// Get the activity from the database.
-		$activity = new BP_Activity_Activity( $activity_id );
-		$author_id = $activity->user_id;
+		$activity 	= new BP_Activity_Activity( $activity_id );
+		$author_id  = $activity->user_id;
+		$user_id 	= bp_loggedin_user_id();
+		
 
-		bp_notifications_add_notification( array(
-			'user_id'           => $author_id,
-			'item_id'           => $activity_id,
-			'component_name'    => $this->plugin_name,
-			'component_action'  => $this->plugin_name_action,
-			'date_notified'     => bp_core_current_time(),
-			'is_new'            => 1,
-		) );
+		if ( bp_is_active( 'notifications' ) ) {
+			bp_notifications_add_notification( array(
+				'user_id'           => $author_id,
+				'item_id'           => $activity_id,
+				'secondary_item_id' => $user_id,
+				'component_name'    => $this->plugin_name,
+				'component_action'  => $this->plugin_name_action,
+				'date_notified'     => bp_core_current_time(),
+				'is_new'            => 1,
+			) );
+		}
 	}
 
 }
