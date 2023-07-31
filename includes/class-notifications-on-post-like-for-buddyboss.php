@@ -118,11 +118,13 @@ final class Notifications_On_Post_Like_For_BuddyBoss {
 		$this->define( 'NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_PLUGIN_PATH', plugin_dir_path( NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_FILES ) );
 		$this->define( 'NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_PLUGIN_URL', plugin_dir_url( NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_FILES ) );
 		
-		if( ! function_exists( 'get_plugin_data' ) ){
-			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		$version = '1.0.0';
+
+		if( function_exists( 'get_plugin_data' ) ){
+			$plugin_data = get_plugin_data( NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_PLUGIN_FILE );
+			$version = $plugin_data['Version'];	
 		}
-		$plugin_data = get_plugin_data( NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_PLUGIN_FILE );
-		$version = $plugin_data['Version'];
+
 		$this->define( 'NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_VERSION', $version );
 	}
 
