@@ -52,9 +52,9 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-notifications-on-post-like
  *
  * @since    1.0.0
  */
-function run_notifications_on_post_like_for_buddyboss() {
+function notifications_on_post_like_for_buddyboss_run() {
 	$plugin = Notifications_On_Post_Like_For_BuddyBoss::instance();
 	$plugin->run();
 
 }
-run_notifications_on_post_like_for_buddyboss();
+notifications_on_post_like_for_buddyboss_run();
