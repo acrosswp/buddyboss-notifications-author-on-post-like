@@ -43,6 +43,15 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 	private $plugin_name_action;
 
 	/**
+	 * The Custom ID of this plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $plugin_name    The Custom ID of this plugin.
+	 */
+	private $plugin_name_message;
+
+	/**
 	 * The version of this plugin.
 	 *
 	 * @since    1.0.0
@@ -62,6 +71,7 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->plugin_name_action = $plugin_name . '_action';
+		$this->plugin_name_message = $plugin_name . '_message';
 		$this->version = $version;
 
 	}
@@ -130,20 +140,58 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 
 		// Get the activity from the database.
 		$activity 	= new BP_Activity_Activity( $activity_id );
-		$author_id  = $activity->user_id;
+		$activity_user_id  = $activity->user_id;
 		$user_id 	= bp_loggedin_user_id();
 		
 
 		if ( bp_is_active( 'notifications' ) ) {
+
+			add_action( 'bp_notification_after_save', array( $this, 'send_email' ), 100 );
+
 			bp_notifications_add_notification( array(
-				'user_id'           => $author_id,
+				'user_id'           => $activity_user_id,
 				'item_id'           => $activity_id,
 				'secondary_item_id' => $user_id,
 				'component_name'    => $this->plugin_name,
 				'component_action'  => $this->plugin_name_action,
 				'date_notified'     => bp_core_current_time(),
-				'is_new'            => 1,
 			) );
+
+			remove_action( 'bp_notification_after_save', array( $this, 'send_email' ), 100 );
+		}
+	}
+
+	/**
+	 * Send like notification to the user
+	 */
+	function send_email( $notification ) {
+
+		$activity_id	= $notification->activity_id;
+		$activity_url	= esc_url( bp_activity_get_permalink( $activity_id ) );
+
+		$activity_author_id = $notification->user_id;
+		
+		$user_id = $notification->secondary_item_id;
+		$name = bp_core_get_user_displayname( $user_id );
+		$user_url = esc_url( bp_core_get_user_domain( $user_id ) );
+
+		if ( true === bb_is_notification_enabled( $activity_author_id, $this->plugin_name_action ) ) {
+			$args                          = array(
+				'tokens' => array(
+					'poster.name'   => $name,
+					'poster.url'  	=> $user_url,
+					'activity.url'  => $activity_url,
+				),
+			);
+
+			$unsubscribe_args              = array(
+				'user_id'           => $activity_author_id,
+				'notification_type' => $this->plugin_name_message,
+			);
+
+			$args['tokens']['unsubscribe'] = esc_url( bp_email_get_unsubscribe_link( $unsubscribe_args ) );
+			// Send notification email.
+			bp_send_email( $this->plugin_name_message, $activity_author_id, $args );
 		}
 	}
 

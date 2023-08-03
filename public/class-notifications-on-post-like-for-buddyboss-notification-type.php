@@ -51,6 +51,15 @@ if ( class_exists( 'BP_Core_Notification_Abstract' ) ) {
          * @var      string    $plugin_name    The Custom ID of this plugin.
          */
         private $plugin_name_action;
+
+        /**
+         * The Custom ID of this plugin.
+         *
+         * @since    1.0.0
+         * @access   private
+         * @var      string    $plugin_name    The Custom ID of this plugin.
+         */
+        private $plugin_name_message;
      
         /**
          * Get the instance of this class.
@@ -146,11 +155,11 @@ if ( class_exists( 'BP_Core_Notification_Abstract' ) ) {
                 $this->plugin_name_message,
                 array(
                     /* translators: do not remove {} brackets or translate its contents. */
-                    'email_title'         => __( '[{{{site.name}}}] {{user_like.name}} like your post', 'notifications-on-post-like-for-buddyboss' ),
+                    'email_title'         => __( '[{{{site.name}}}] {{poster.name}} like your Activity', 'notifications-on-post-like-for-buddyboss' ),
                     /* translators: do not remove {} brackets or translate its contents. */
-                    'email_content'       => __( "<a href=\"{{{user_like.url}}}\">{{user_like.name}}</a> started following you.\n\n{{{member.card}}}", 'notifications-on-post-like-for-buddyboss' ),
+                    'email_content'       => __( "<a href=\"{{{poster.url}}}\">{{poster.name}}</a> have like your <a href=\"{{{activity.url}}}\">Activity</a>", 'notifications-on-post-like-for-buddyboss' ),
                     /* translators: do not remove {} brackets or translate its contents. */
-                    'email_plain_content' => __( "{{user_like.name}} started following you.\n\nTo learn more about them, visit their profile: {{{reaction_reactions.url}}}", 'notifications-on-post-like-for-buddyboss' ),
+                    'email_plain_content' => __( "{{poster.name}} have like your Activity.\n\Activity link: {{{activity.url}}}", 'notifications-on-post-like-for-buddyboss' ),
                     'situation_label'     => __( 'A posts author get like by members', 'notifications-on-post-like-for-buddyboss' ),
                     'unsubscribe_text'    => __( 'You will no longer receive emails when someone like your posts.', 'notifications-on-post-like-for-buddyboss' ),
                 ),
