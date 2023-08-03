@@ -15,8 +15,8 @@ jobs:
 
       - name: Build plugin # Remove or modify this step as needed
         run: |
-          npm install
-          npm run build-production
+          pnpm install
+          pnpm run build-production
 
       - name: Generate zip
         uses: 10up/action-wordpress-plugin-build-zip@stable

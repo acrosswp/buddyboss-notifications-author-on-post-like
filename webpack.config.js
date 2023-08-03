@@ -3,7 +3,6 @@
  */
 const wpPot = require('wp-pot');
 
-
 //// POT file.
 wpPot( {
 	package: 'Notifications On Post Like For BuddyBoss',
@@ -13,3 +12,6 @@ wpPot( {
 	src: [ './**/*.php' ],
 	bugReport: 'https://github.com/acrosswp/notifications-on-post-like-for-buddyboss/issues'
 } );
+
+// Return Array of Configurations
+module.exports = [];
