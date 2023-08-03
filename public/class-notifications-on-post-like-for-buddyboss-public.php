@@ -107,7 +107,7 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 			if ( 'string' === $format ) {
 				$return = apply_filters( 'noplfb_user_like_filter', '<a href="' . esc_url( $custom_link ) . '" title="' . esc_attr( $custom_title ) . '">' . esc_html( $custom_text ) . '</a>', $custom_text, $custom_link );
 
-			// Deprecated BuddyBar
+			// BuddyBoss Menu
 			} else {
 				$return = apply_filters( 'noplfb_user_like_filter', array(
 					'text' => $custom_text,
@@ -126,7 +126,7 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 	 * 
 	 * @since 1.0.0
 	 */
-	function custom_add_notification( $activity_id, $user_id ) {
+	function add_notification( $activity_id, $user_id ) {
 
 		// Get the activity from the database.
 		$activity 	= new BP_Activity_Activity( $activity_id );
@@ -147,4 +147,44 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 		}
 	}
 
+	/**
+	 * This hooks to comment creation and saves the comment id
+	 * 
+	 * @since 1.0.0
+	 */
+	function remove_notification( $activity_id, $user_id ) {
+
+		if ( ! empty( $activity_id ) ) {
+			// Get the activity from the database.
+			$activity 	= new BP_Activity_Activity( $activity_id );
+			$author_id  = $activity->user_id;
+			$user_id 	= bp_loggedin_user_id();
+			
+
+			if ( bp_is_active( 'notifications' ) ) {
+				$sefd = bp_notifications_delete_notifications_by_item_id(
+					$author_id, // Following user id.
+					$activity_id,
+					$this->plugin_name,
+					$this->plugin_name_action,
+					$user_id
+				);
+			}
+		}
+	}
+
+	/**
+	 * Load file on BP init Hooks
+	 */
+	function bp_init() {
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-notifications-on-post-like-for-buddyboss-notification-type.php';
+		
+		/**
+		 * Check if the class exits or not
+		 */
+		if( class_exists( 'Notifications_On_Post_Like_For_BuddyBoss_Notification' ) ) {
+			$buddyboss_notification = new Notifications_On_Post_Like_For_BuddyBoss_Notification( $this->plugin_name );
+		}
+	}
 }

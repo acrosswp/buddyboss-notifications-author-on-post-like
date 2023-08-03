@@ -242,7 +242,10 @@ final class Notifications_On_Post_Like_For_BuddyBoss {
 
 		$this->loader->add_filter( 'bp_notifications_get_registered_components', $plugin_public, 'registered_components' );
 		$this->loader->add_filter( 'bp_notifications_get_notifications_for_user', $plugin_public, 'format_notifications', 1000, 5 );
-		$this->loader->add_action( 'bp_activity_add_user_favorite', $plugin_public, 'custom_add_notification', 99, 2 );
+		$this->loader->add_action( 'bp_activity_add_user_favorite', $plugin_public, 'add_notification', 99, 2 );
+		$this->loader->add_action( 'bp_activity_remove_user_favorite', $plugin_public, 'remove_notification', 99, 2 );
+
+		$this->loader->add_action( 'bp_init', $plugin_public, 'bp_init', 99, 2 );
 
 	}
 
