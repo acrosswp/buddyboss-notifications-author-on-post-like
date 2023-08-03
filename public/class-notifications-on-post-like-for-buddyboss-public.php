@@ -166,7 +166,7 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 	 */
 	function send_email( $notification ) {
 
-		$activity_id	= $notification->activity_id;
+		$activity_id	= $notification->item_id;
 		$activity_url	= esc_url( bp_activity_get_permalink( $activity_id ) );
 
 		$activity_author_id = $notification->user_id;
@@ -179,7 +179,7 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 			$args                          = array(
 				'tokens' => array(
 					'poster.name'   => $name,
-					'poster.url'  	=> $user_url,
+					'poster_like.url'  	=> $user_url,
 					'activity.url'  => $activity_url,
 				),
 			);
@@ -210,7 +210,7 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 			
 
 			if ( bp_is_active( 'notifications' ) ) {
-				$sefd = bp_notifications_delete_notifications_by_item_id(
+				bp_notifications_delete_notifications_by_item_id(
 					$author_id, // Following user id.
 					$activity_id,
 					$this->plugin_name,

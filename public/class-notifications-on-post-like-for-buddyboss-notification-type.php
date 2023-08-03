@@ -157,7 +157,7 @@ if ( class_exists( 'BP_Core_Notification_Abstract' ) ) {
                     /* translators: do not remove {} brackets or translate its contents. */
                     'email_title'         => __( '[{{{site.name}}}] {{poster.name}} like your Activity', 'notifications-on-post-like-for-buddyboss' ),
                     /* translators: do not remove {} brackets or translate its contents. */
-                    'email_content'       => __( "<a href=\"{{{poster.url}}}\">{{poster.name}}</a> have like your <a href=\"{{{activity.url}}}\">Activity</a>", 'notifications-on-post-like-for-buddyboss' ),
+                    'email_content'       => __( "<a href=\"{{{poster_like.url}}}\">{{poster.name}}</a> have like your <a href=\"{{{activity.url}}}\">Activity</a>", 'notifications-on-post-like-for-buddyboss' ),
                     /* translators: do not remove {} brackets or translate its contents. */
                     'email_plain_content' => __( "{{poster.name}} have like your Activity.\n\Activity link: {{{activity.url}}}", 'notifications-on-post-like-for-buddyboss' ),
                     'situation_label'     => __( 'A posts author get like by members', 'notifications-on-post-like-for-buddyboss' ),
