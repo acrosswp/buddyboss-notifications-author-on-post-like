@@ -1,13 +1,15 @@
-/.wordpress-org
 /.git
 /.github
 /node_modules
-/src
+/dist
 
 .distignore
 .gitignore
+.travis.yml
+
 package.json
+pnpm-lock.yaml
 package-lock.json
 README.md
 webpack-config.js
-.travis.yml
+webpack.config.js
