@@ -188,8 +188,6 @@ function notifications_on_post_like_for_buddyboss_to_1_0_0( $plugin_name ) {
 	foreach ( $emails as $id => $email ) {
 		
 		if( $email_id === $id ) {
-			
-			error_log( print_r( $id, true ) . "\n", 3, WP_CONTENT_DIR . '/debug_new.log' );
 
 			// Some emails are multisite-only.
 			if ( ! is_multisite() && isset( $email['args'] ) && ! empty( $email['args']['multisite'] ) ) {
