@@ -155,6 +155,7 @@ final class Notifications_On_Post_Like_For_BuddyBoss {
 		 * @since    1.0.0
 		 */
 		if( apply_filters( 'notifications-on-post-like-for-buddyboss-load', true ) ) {
+			$this->define_admin_hooks();
 			$this->define_public_hooks();
 		}
 
@@ -182,31 +183,36 @@ final class Notifications_On_Post_Like_For_BuddyBoss {
 		 * The class responsible for loading the dependency main class
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/dependency/class-dependency.php';
+		require_once NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_PLUGIN_PATH . 'includes/dependency/class-dependency.php';
 
 		/**
 		 * The class responsible for loading the dependency main class
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/dependency/buddyboss.php';
+		require_once NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_PLUGIN_PATH . 'includes/dependency/buddyboss.php';
 
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-notifications-on-post-like-for-buddyboss-loader.php';
+		require_once NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_PLUGIN_PATH . 'includes/class-notifications-on-post-like-for-buddyboss-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-notifications-on-post-like-for-buddyboss-i18n.php';
+		require_once NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_PLUGIN_PATH . 'includes/class-notifications-on-post-like-for-buddyboss-i18n.php';
+
+		/**
+		 * The class responsible for defining all actions that occur in the admin area.
+		 */
+		require_once NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_PLUGIN_PATH . 'admin/update/class-notifications-on-post-like-for-buddyboss-update.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-notifications-on-post-like-for-buddyboss-public.php';
+		require_once NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_PLUGIN_PATH . 'public/class-notifications-on-post-like-for-buddyboss-public.php';
 
 		$this->loader = Notifications_On_Post_Like_For_BuddyBoss_Loader::instance();
 
@@ -226,6 +232,21 @@ final class Notifications_On_Post_Like_For_BuddyBoss {
 		$plugin_i18n = new Notifications_On_Post_Like_For_BuddyBoss_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+
+	}
+
+	/**
+	 * Register all of the hooks related to the admin area functionality
+	 * of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function define_admin_hooks() {
+
+		$plugin_update = new Notifications_On_Post_Like_For_BuddyBoss_Update( $this->get_plugin_name(), $this->get_version() );
+
+		$this->loader->add_action( 'admin_init', $plugin_update, 'setup_updater' );
 
 	}
 
