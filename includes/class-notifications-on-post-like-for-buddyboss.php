@@ -155,8 +155,8 @@ final class Notifications_On_Post_Like_For_BuddyBoss {
 		 * @since    1.0.0
 		 */
 		if( apply_filters( 'notifications-on-post-like-for-buddyboss-load', true ) ) {
-			$this->define_admin_hooks();
 			$this->define_public_hooks();
+			$this->define_admin_hooks();
 		}
 
 	}
@@ -246,7 +246,7 @@ final class Notifications_On_Post_Like_For_BuddyBoss {
 
 		$plugin_update = new Notifications_On_Post_Like_For_BuddyBoss_Update( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'admin_init', $plugin_update, 'setup_updater' );
+		$this->loader->add_action( 'bp_admin_init', $plugin_update, 'setup_updater' );
 
 	}
 
