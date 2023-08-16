@@ -189,6 +189,22 @@ function notifications_on_post_like_for_buddyboss_to_1_0_0( $plugin_name ) {
 		
 		if( $email_id === $id ) {
 
+			/**
+			 * Skip if Email already exits
+			 */
+			if (
+				term_exists( $id, bp_get_email_tax_type() ) &&
+				get_terms(
+					array(
+						'taxonomy' => bp_get_email_tax_type(),
+						'slug'     => $id,
+						'fields'   => 'count',
+					)
+				) > 0
+			) {
+				continue;
+			}
+
 			// Some emails are multisite-only.
 			if ( ! is_multisite() && isset( $email['args'] ) && ! empty( $email['args']['multisite'] ) ) {
 				continue;

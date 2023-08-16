@@ -3,8 +3,8 @@ Contributors: acrosswp, raftaar1191
 Tags: buddyboss, buddyboss-platform, like-notifications, notifications-on-post-like-for-buddyboss
 Donate link: https://acrosswp.com/
 Requires at least: 6.0
-Tested up to: 6.2.2
-Stable tag: 1.0.2
+Tested up to: 6.3
+Stable tag: 1.0.3
 Requires PHP: 8.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -40,3 +40,7 @@ Yes.
 
 = 1.0.2 =
 * Update Readme files
+
+= 1.0.3 =
+* Fix Updating the Email Template duplicate issue
+* Tested the plugin with WordPress Latest Version
