@@ -5,7 +5,7 @@ Donate link: https://acrosswp.com/
 Requires at least: 6.0
 Tested up to: 6.3
 Stable tag: 1.0.3
-Requires PHP: 8.0
+Requires PHP: 5.6.20
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
