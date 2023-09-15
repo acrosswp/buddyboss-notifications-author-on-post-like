@@ -77,14 +77,15 @@ final class Notifications_On_Post_Like_For_BuddyBoss {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
+
+		$this->define_constants();
+
 		if ( defined( 'NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_VERSION' ) ) {
 			$this->version = NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
 		$this->plugin_name = 'notifications-on-post-like-for-buddyboss';
-
-		$this->define_constants();
 
 		$this->load_dependencies();
 		$this->set_locale();
