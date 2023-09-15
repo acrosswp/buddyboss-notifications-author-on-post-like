@@ -110,7 +110,7 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 
 			$name = bp_core_get_user_displayname( $secondary_item_id );
 		
-			$custom_text = $custom_title = $name . ' liked on the post ' . get_the_title( $activity_id );
+			$custom_text = $custom_title = $name . ' liked on your post';
 			$custom_link  = bp_activity_get_permalink( $item_id );
 
 			// WordPress Toolbar
@@ -143,8 +143,11 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 		$activity_user_id  = $activity->user_id;
 		$user_id 	= bp_loggedin_user_id();
 		
-
-		if ( bp_is_active( 'notifications' ) ) {
+		/**
+		 * Check if the notifications is active 
+		 * Check if the activity does not below to the login user and if so then do not send the notifications
+		 */
+		if ( bp_is_active( 'notifications' ) && $activity_user_id !== $user_id ) {
 
 			add_action( 'bp_notification_after_save', array( $this, 'send_email' ), 100 );
 
