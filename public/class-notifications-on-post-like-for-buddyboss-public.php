@@ -110,7 +110,7 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 
 			$name = bp_core_get_user_displayname( $secondary_item_id );
 		
-			$custom_text = $custom_title = $name . ' liked on your post';
+			$custom_text = sprintf( esc_html__( '%s liked on your post', 'notifications-on-post-like-for-buddyboss' ), $name );
 			$custom_link  = bp_activity_get_permalink( $item_id );
 
 			// WordPress Toolbar
@@ -122,7 +122,7 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 				$return = apply_filters( 'noplfb_user_like_filter', array(
 					'text' => $custom_text,
 					'link' => $custom_link
-				), $custom_link, (int) $total_items, $custom_text, $custom_title );
+				), $custom_link, (int) $total_items, $custom_text );
 			}
 			
 			return $return;
