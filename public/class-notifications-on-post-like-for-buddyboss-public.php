@@ -115,7 +115,7 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 
 			// WordPress Toolbar
 			if ( 'string' === $format ) {
-				$return = apply_filters( 'noplfb_user_like_filter', '<a href="' . esc_url( $custom_link ) . '" title="' . esc_attr( $custom_title ) . '">' . esc_html( $custom_text ) . '</a>', $custom_text, $custom_link );
+				$return = apply_filters( 'noplfb_user_like_filter', '<a href="' . esc_url( $custom_link ) . '" title="' . esc_attr( $custom_text ) . '">' . esc_html( $custom_text ) . '</a>', $custom_text, $custom_link );
 
 			// BuddyBoss Menu
 			} else {
