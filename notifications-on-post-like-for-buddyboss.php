@@ -16,7 +16,7 @@
  * Plugin Name:       Notifications On Post Like For BuddyBoss
  * Plugin URI:        https://acrosswp.com
  * Description:       Notifications to the Post author on there Post Like by Someone For BuddyBoss by AcrossWP
- * Version:           1.0.4
+ * Version:           1.0.5
  * Author:            AcrossWP
  * Author URI:        https://acrosswp.com
  * License:           GPL-2.0+
