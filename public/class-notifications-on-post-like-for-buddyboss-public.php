@@ -115,11 +115,11 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 
 			// WordPress Toolbar
 			if ( 'string' === $format ) {
-				$return = apply_filters( 'noplfb_user_like_filter', '<a href="' . esc_url( $custom_link ) . '" title="' . esc_attr( $custom_text ) . '">' . esc_html( $custom_text ) . '</a>', $custom_text, $custom_link );
+				$return = apply_filters( 'notifications_on_post_like_for_buddyboss_user_like_filter', '<a href="' . esc_url( $custom_link ) . '" title="' . esc_attr( $custom_text ) . '">' . esc_html( $custom_text ) . '</a>', $custom_text, $custom_link );
 
 			// BuddyBoss Menu
 			} else {
-				$return = apply_filters( 'noplfb_user_like_filter', array(
+				$return = apply_filters( 'notifications_on_post_like_for_buddyboss_user_like_filter', array(
 					'text' => $custom_text,
 					'link' => $custom_link
 				), $custom_link, (int) $total_items, $custom_text );
@@ -141,7 +141,6 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 		// Get the activity from the database.
 		$activity 	= new BP_Activity_Activity( $activity_id );
 		$activity_user_id  = $activity->user_id;
-		$user_id 	= bp_loggedin_user_id();
 		
 		/**
 		 * Check if the notifications is active 
