@@ -101,7 +101,7 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 	 * 
 	 * @since 1.0.0
 	 */
-	function format_notifications( $action, $item_id, $secondary_item_id, $total_items, $format = 'string' ) {
+	function format_notifications( $content, $item_id, $secondary_item_id, $total_items, $format = 'string', $action, $screen, $notification_id ) {
 
 		// New custom notifications
 		if ( $this->plugin_name_action === $action ) {
@@ -110,8 +110,9 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 
 			$name = bp_core_get_user_displayname( $secondary_item_id );
 		
+
 			$custom_text = sprintf( esc_html__( '%s liked on your post', 'notifications-on-post-like-for-buddyboss' ), $name );
-			$custom_link  = bp_activity_get_permalink( $item_id );
+			$custom_link = add_query_arg( 'rid', (int) $notification_id, bp_activity_get_permalink( $item_id ) );
 
 			// WordPress Toolbar
 			if ( 'string' === $format ) {
