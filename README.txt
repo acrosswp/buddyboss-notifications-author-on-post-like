@@ -4,7 +4,7 @@ Tags: buddyboss, buddyboss-platform, like-notifications, notifications-on-post-l
 Donate link: https://acrosswp.com/
 Requires at least: 6.0
 Tested up to: 6.3
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 Requires PHP: 5.6.20
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -54,3 +54,6 @@ Yes.
 
 = 1.0.6 =
 * Add Media
+
+= 1.0.7 =
+* Once a notification is clicked and viewed, it will not be marked as a read notification #7
