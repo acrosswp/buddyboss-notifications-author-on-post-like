@@ -4,7 +4,7 @@ Tags: buddyboss, buddyboss-platform, like-notifications, notifications-on-post-l
 Donate link: https://acrosswp.com/
 Requires at least: 6.0
 Tested up to: 6.3
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 Requires PHP: 5.6.20
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -32,28 +32,28 @@ Yes.
 
 == Changelog ==
 
-= 1.0.0 =
-* Add Plugin to WordPress Repository
+= 1.0.8 =
+* Fix for github-issue-9
 
-= 1.0.1 =
-* Fix Email template missing issue
+= 1.0.7 =
+* Once a notification is clicked and viewed, it will not be marked as a read notification #7
 
-= 1.0.2 =
-* Update Readme files
+= 1.0.6 =
+* Add Media
 
-= 1.0.3 =
-* Fix Updating the Email Template duplicate issue
-* Tested the plugin with WordPress Latest Version
+= 1.0.5 =
+* Fixed username not displaying issue #6
 
 = 1.0.4 =
 * Fix Notification getting send to the author of the post if he like his own post
 * Fix User are see admin in the text even when they are not admin
 
-= 1.0.5 =
-* Fixed username not displaying issue #6
+= 1.0.3 =
+* Fix Updating the Email Template duplicate issue
+* Tested the plugin with WordPress Latest Version
 
-= 1.0.6 =
-* Add Media
+= 1.0.2 =
+* Update Readme files
 
-= 1.0.7 =
-* Once a notification is clicked and viewed, it will not be marked as a read notification #7
+= 1.0.0 =
+* Add Plugin to WordPress Repository
