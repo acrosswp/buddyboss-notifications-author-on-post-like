@@ -101,7 +101,7 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 	 * 
 	 * @since 1.0.0
 	 */
-	function format_notifications( $content, $item_id, $secondary_item_id, $total_items, $format = 'string', $action, $screen, $notification_id ) {
+	function format_notifications( $action, $item_id, $secondary_item_id, $total_items, $format = 'string', $main_action, $screen, $notification_id ) {
 
 		// New custom notifications
 		if ( $this->plugin_name_action === $action ) {
