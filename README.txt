@@ -9,19 +9,54 @@ Requires PHP: 5.6.20
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Notifications to the Post author on there Post Like by Members For BuddyBoss by AcrossWP
-
 == Description ==
 
-Notifications to the Post author on there Post Like by Members For BuddyBoss by AcrossWP
+https://www.youtube.com/watch?v=QfwOv1Nsiow
+
+Enhance the engagement on your BuddyBoss platform with our specialized plugin by AcrossWP. This powerful extension ensures that post authors receive instant notifications whenever their posts are liked by members.
+
+**Key Features:**
+
+**Real-Time Notifications:** Post authors are instantly notified when members like their posts, keeping them engaged and informed.
+
+**Boosted Interaction:** Encourage more interactions between members and authors, fostering a vibrant community.
+
+**Customizable Preferences:** Authors can fine-tune their notification settings to suit their preferences, ensuring a personalized experience.
+
+**Seamless Integration:** Effortlessly integrates with BuddyBoss, seamlessly becoming a part of your existing platform.
+
+**New BuddyBoss Platform Notification API Support:** Utilizes the latest BuddyBoss platform notification API for enhanced performance and reliability.
+
+**User-Friendly Interface:** Easy-to-use and intuitive, ensuring a hassle-free experience for both authors and members.
+
+**Track Engagement:** Gain insights into post popularity and member interactions with detailed analytics.
+
+Elevate your BuddyBoss community with Notifications On Post Like For BuddyBoss. Install now and watch your platform thrive with increased engagement and interaction!
+
+== Frequently Asked Questions ==
+
+= Support Old version of WordPress =
+
+Yes.
+
+= Support Old version of BuddyBoss Platform =
+
+Yes.
+
+= Does it Support PHP Version 5.6.20? =
+
+Yes.
 
 
 == Installation ==
 
 This section describes how to install the plugin and get it working.
 
-e.g.
+Example 1:
 
+https://www.youtube.com/watch?v=AChIt2MUuwQ
+
+Example 2:
 1. Upload the plugin files to the `/wp-content/plugins/notifications-on-post-like-for-buddyboss` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress
 3. (Make your instructions match the desired user flow for activating and installing your plugin. Include any steps that might be needed for explanatory purposes)
