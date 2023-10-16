@@ -1,4 +1,6 @@
 <?php
+// Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 /**
  * The file that defines the core plugin class
@@ -9,8 +11,8 @@
  * @link       https://acrosswp.com
  * @since      1.0.0
  *
- * @package    Sorting_Option_In_Network_Search_For_BuddyBoss
- * @subpackage Sorting_Option_In_Network_Search_For_BuddyBoss/includes
+ * @package    Notifications_On_Post_Like_For_BuddyBoss
+ * @subpackage Notifications_On_Post_Like_For_BuddyBoss/includes
  */
 
 /**
@@ -23,11 +25,19 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    Sorting_Option_In_Network_Search_For_BuddyBoss
- * @subpackage Sorting_Option_In_Network_Search_For_BuddyBoss/includes
+ * @package    Notifications_On_Post_Like_For_BuddyBoss
+ * @subpackage Notifications_On_Post_Like_For_BuddyBoss/includes
  * @author     AcrossWP <contact@acrosswp.com>
  */
-class Sorting_Option_In_Network_Search_For_BuddyBoss {
+final class Notifications_On_Post_Like_For_BuddyBoss {
+	
+	/**
+	 * The single instance of the class.
+	 *
+	 * @var Notifications_On_Post_Like_For_BuddyBoss
+	 * @since 1.0.0
+	 */
+	protected static $_instance = null;
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -35,7 +45,7 @@ class Sorting_Option_In_Network_Search_For_BuddyBoss {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Sorting_Option_In_Network_Search_For_BuddyBoss_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Notifications_On_Post_Like_For_BuddyBoss_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -70,18 +80,33 @@ class Sorting_Option_In_Network_Search_For_BuddyBoss {
 
 		$this->define_constants();
 
-		if ( defined( 'SORTING_OPTION_IN_NETWORK_SEARCH_FOR_BUDDYBOSS_VERSION' ) ) {
-			$this->version = SORTING_OPTION_IN_NETWORK_SEARCH_FOR_BUDDYBOSS_VERSION;
+		if ( defined( 'NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_VERSION' ) ) {
+			$this->version = NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'sorting-option-in-network-search-for-buddyboss';
+		$this->plugin_name = 'notifications-on-post-like-for-buddyboss';
 
 		$this->load_dependencies();
-
 		$this->set_locale();
-
 		$this->load_hooks();
+	}
+
+	/**
+	 * Main Notifications_On_Post_Like_For_BuddyBoss Instance.
+	 *
+	 * Ensures only one instance of WooCommerce is loaded or can be loaded.
+	 *
+	 * @since 1.0.0
+	 * @static
+	 * @see Notifications_On_Post_Like_For_BuddyBoss()
+	 * @return Notifications_On_Post_Like_For_BuddyBoss - Main instance.
+	 */
+	public static function instance() {
+		if ( is_null( self::$_instance ) ) {
+			self::$_instance = new self();
+		}
+		return self::$_instance;
 	}
 
 	/**
@@ -89,14 +114,19 @@ class Sorting_Option_In_Network_Search_For_BuddyBoss {
 	 */
 	private function define_constants() {
 
-		$this->define( 'SORTING_OPTION_IN_NETWORK_SEARCH_FOR_BUDDYBOSS_PLUGIN_FILE', SORTING_OPTION_IN_NETWORK_SEARCH_FOR_BUDDYBOSS_FILES );
-		$this->define( 'SORTING_OPTION_IN_NETWORK_SEARCH_FOR_BUDDYBOSS_PLUGIN_BASENAME', plugin_basename( SORTING_OPTION_IN_NETWORK_SEARCH_FOR_BUDDYBOSS_FILES ) );
-		$this->define( 'SORTING_OPTION_IN_NETWORK_SEARCH_FOR_BUDDYBOSS_PLUGIN_PATH', plugin_dir_path( SORTING_OPTION_IN_NETWORK_SEARCH_FOR_BUDDYBOSS_FILES ) );
-		$this->define( 'SORTING_OPTION_IN_NETWORK_SEARCH_FOR_BUDDYBOSS_PLUGIN_URL', plugin_dir_url( SORTING_OPTION_IN_NETWORK_SEARCH_FOR_BUDDYBOSS_FILES ) );
+		$this->define( 'NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_PLUGIN_FILE', NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_FILES );
+		$this->define( 'NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_PLUGIN_BASENAME', plugin_basename( NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_FILES ) );
+		$this->define( 'NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_PLUGIN_PATH', plugin_dir_path( NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_FILES ) );
+		$this->define( 'NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_PLUGIN_URL', plugin_dir_url( NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_FILES ) );
 		
-		$plugin_data = get_plugin_data( SORTING_OPTION_IN_NETWORK_SEARCH_FOR_BUDDYBOSS_PLUGIN_FILE );
-		$version = $plugin_data['Version'];
-		$this->define( 'SORTING_OPTION_IN_NETWORK_SEARCH_FOR_BUDDYBOSS_VERSION', $version );
+		$version = '1.0.0';
+
+		if( function_exists( 'get_plugin_data' ) ){
+			$plugin_data = get_plugin_data( NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_PLUGIN_FILE );
+			$version = $plugin_data['Version'];	
+		}
+
+		$this->define( 'NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_VERSION', $version );
 	}
 
 	/**
@@ -125,9 +155,9 @@ class Sorting_Option_In_Network_Search_For_BuddyBoss {
 		 * 
 		 * @since    1.0.0
 		 */
-		if( apply_filters( 'sorting-option-in-network-search-for-buddyboss-load', true ) ) {
-			$this->define_admin_hooks();
+		if( apply_filters( 'notifications-on-post-like-for-buddyboss-load', true ) ) {
 			$this->define_public_hooks();
+			$this->define_admin_hooks();
 		}
 
 	}
@@ -137,10 +167,10 @@ class Sorting_Option_In_Network_Search_For_BuddyBoss {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - Sorting_Option_In_Network_Search_For_BuddyBoss_Loader. Orchestrates the hooks of the plugin.
-	 * - Sorting_Option_In_Network_Search_For_BuddyBoss_i18n. Defines internationalization functionality.
-	 * - Sorting_Option_In_Network_Search_For_BuddyBoss_Admin. Defines all hooks for the admin area.
-	 * - Sorting_Option_In_Network_Search_For_BuddyBoss_Public. Defines all hooks for the public side of the site.
+	 * - Notifications_On_Post_Like_For_BuddyBoss_Loader. Orchestrates the hooks of the plugin.
+	 * - Notifications_On_Post_Like_For_BuddyBoss_i18n. Defines internationalization functionality.
+	 * - Notifications_On_Post_Like_For_BuddyBoss_Admin. Defines all hooks for the admin area.
+	 * - Notifications_On_Post_Like_For_BuddyBoss_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -154,51 +184,50 @@ class Sorting_Option_In_Network_Search_For_BuddyBoss {
 		 * The class responsible for loading the dependency main class
 		 * core plugin.
 		 */
-		require_once SORTING_OPTION_IN_NETWORK_SEARCH_FOR_BUDDYBOSS_PLUGIN_PATH . 'includes/dependency/class-dependency.php';
+		require_once NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_PLUGIN_PATH . 'includes/dependency/class-dependency.php';
 
 		/**
 		 * The class responsible for loading the dependency main class
 		 * core plugin.
 		 */
-		require_once SORTING_OPTION_IN_NETWORK_SEARCH_FOR_BUDDYBOSS_PLUGIN_PATH . 'includes/dependency/buddyboss.php';
-
-		/**
-		 * The file is responce for loading all the necessay functions
-		 * core plugin.
-		 */
-		require_once SORTING_OPTION_IN_NETWORK_SEARCH_FOR_BUDDYBOSS_PLUGIN_PATH . 'includes/functions.php';
+		require_once NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_PLUGIN_PATH . 'includes/dependency/buddyboss.php';
 
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once SORTING_OPTION_IN_NETWORK_SEARCH_FOR_BUDDYBOSS_PLUGIN_PATH . 'includes/class-sorting-option-in-network-search-for-buddyboss-loader.php';
+		require_once NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_PLUGIN_PATH . 'includes/class-notifications-on-post-like-for-buddyboss-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once SORTING_OPTION_IN_NETWORK_SEARCH_FOR_BUDDYBOSS_PLUGIN_PATH . 'includes/class-sorting-option-in-network-search-for-buddyboss-i18n.php';
+		require_once NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_PLUGIN_PATH . 'includes/class-notifications-on-post-like-for-buddyboss-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once SORTING_OPTION_IN_NETWORK_SEARCH_FOR_BUDDYBOSS_PLUGIN_PATH . 'admin/class-sorting-option-in-network-search-for-buddyboss-admin.php';
+		require_once NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_PLUGIN_PATH . 'admin/class-notifications-on-post-like-for-buddyboss-admin.php';
+
+		/**
+		 * The class responsible for defining all actions that occur in the admin area.
+		 */
+		require_once NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_PLUGIN_PATH . 'admin/update/class-notifications-on-post-like-for-buddyboss-update.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once SORTING_OPTION_IN_NETWORK_SEARCH_FOR_BUDDYBOSS_PLUGIN_PATH . 'public/class-sorting-option-in-network-search-for-buddyboss-public.php';
+		require_once NOTIFICATIONS_ON_POST_LIKE_FOR_BUDDYBOSS_PLUGIN_PATH . 'public/class-notifications-on-post-like-for-buddyboss-public.php';
 
-		$this->loader = new Sorting_Option_In_Network_Search_For_BuddyBoss_Loader();
+		$this->loader = Notifications_On_Post_Like_For_BuddyBoss_Loader::instance();
 
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Sorting_Option_In_Network_Search_For_BuddyBoss_i18n class in order to set the domain and to register the hook
+	 * Uses the Notifications_On_Post_Like_For_BuddyBoss_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -206,7 +235,7 @@ class Sorting_Option_In_Network_Search_For_BuddyBoss {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Sorting_Option_In_Network_Search_For_BuddyBoss_i18n();
+		$plugin_i18n = new Notifications_On_Post_Like_For_BuddyBoss_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -221,15 +250,19 @@ class Sorting_Option_In_Network_Search_For_BuddyBoss {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Sorting_Option_In_Network_Search_For_BuddyBoss_Admin( $this->get_plugin_name(), $this->get_version() );
+		/**
+		 * For Plugin admin area
+		 */
+		$plugin_admin = new Notifications_On_Post_Like_For_BuddyBoss_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'plugin_action_links', $plugin_admin, 'modify_plugin_action_links', 10, 2 );
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		/**
+		 * For Plugin version update
+		 */
+		$plugin_update = new Notifications_On_Post_Like_For_BuddyBoss_Update( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		
-		$this->loader->add_action( 'bp_admin_setting_search_register_fields', $plugin_admin, 'admin_setting_general_register_fields' );
+		$this->loader->add_action( 'bp_admin_init', $plugin_update, 'setup_updater' );
 
 	}
 
@@ -242,9 +275,14 @@ class Sorting_Option_In_Network_Search_For_BuddyBoss {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Sorting_Option_In_Network_Search_For_BuddyBoss_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Notifications_On_Post_Like_For_BuddyBoss_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'init', $plugin_public, 'sorting_option_in_network_search_for_buddyboss_hook', 81 );
+		$this->loader->add_filter( 'bp_notifications_get_registered_components', $plugin_public, 'registered_components' );
+		$this->loader->add_filter( 'bp_notifications_get_notifications_for_user', $plugin_public, 'format_notifications', 10000, 8 );
+		$this->loader->add_action( 'bp_activity_add_user_favorite', $plugin_public, 'add_notification', 99, 2 );
+		$this->loader->add_action( 'bp_activity_remove_user_favorite', $plugin_public, 'remove_notification', 99, 2 );
+
+		$this->loader->add_action( 'bp_init', $plugin_public, 'bp_init', 99, 2 );
 
 	}
 
@@ -272,7 +310,7 @@ class Sorting_Option_In_Network_Search_For_BuddyBoss {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    Sorting_Option_In_Network_Search_For_BuddyBoss_Loader    Orchestrates the hooks of the plugin.
+	 * @return    Notifications_On_Post_Like_For_BuddyBoss_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;

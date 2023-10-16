@@ -4,7 +4,7 @@ Tags: buddyboss, buddyboss-platform, like-notifications, notifications-on-post-l
 Donate link: https://acrosswp.com/
 Requires at least: 6.0
 Tested up to: 6.3
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 Requires PHP: 5.6.20
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -31,6 +31,10 @@ e.g.
 Yes.
 
 == Changelog ==
+
+= 1.0.9 =
+* Add Plugin setting and About Plugin plugin link
+* Update Readme.txt file
 
 = 1.0.8 =
 * Fix for github-issue-9
