@@ -127,14 +127,19 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 	function format_notifications( $action, $item_id, $secondary_item_id, $total_items, $format = 'string', $main_action, $screen, $notification_id ) {
 
 		// New custom notifications
-		if ( $this->plugin_name_action === $action ) {
-		
+		if ( 
+			$this->plugin_name_action === $action 
+			|| $this->plugin_name_action_comment === $action 
+		) {
 			$activity = new BP_Activity_Activity( $item_id );
-
 			$name = bp_core_get_user_displayname( $secondary_item_id );
 		
+			if ( $this->plugin_name_action === $action ) {
+				$custom_text = sprintf( esc_html__( '%s liked on your post', 'notifications-on-post-like-for-buddyboss' ), $name );
+			} else {
+				$custom_text = sprintf( esc_html__( '%s liked on your comment', 'notifications-on-post-like-for-buddyboss' ), $name );
+			}
 
-			$custom_text = sprintf( esc_html__( '%s liked on your post', 'notifications-on-post-like-for-buddyboss' ), $name );
 			$custom_link = add_query_arg( 'rid', (int) $notification_id, bp_activity_get_permalink( $item_id ) );
 
 			// WordPress Toolbar
@@ -144,31 +149,6 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 			// BuddyBoss Menu
 			} else {
 				$return = apply_filters( 'notifications_on_post_like_for_buddyboss_user_like_filter', array(
-					'text' => $custom_text,
-					'link' => $custom_link
-				), $custom_link, (int) $total_items, $custom_text );
-			}
-			
-			return $return;
-		}
-
-		if ( $this->plugin_name_action_comment === $action ) {
-		
-			$activity = new BP_Activity_Activity( $item_id );
-
-			$name = bp_core_get_user_displayname( $secondary_item_id );
-		
-
-			$custom_text = sprintf( esc_html__( '%s liked on your comment', 'notifications-on-post-like-for-buddyboss' ), $name );
-			$custom_link = add_query_arg( 'rid', (int) $notification_id, bp_activity_get_permalink( $item_id ) );
-
-			// WordPress Toolbar
-			if ( 'string' === $format ) {
-				$return = apply_filters( 'notifications_on_comment_like_for_buddyboss_user_like_filter', '<a href="' . esc_url( $custom_link ) . '" title="' . esc_attr( $custom_text ) . '">' . esc_html( $custom_text ) . '</a>', $custom_text, $custom_link );
-
-			// BuddyBoss Menu
-			} else {
-				$return = apply_filters( 'notifications_on_comment_like_for_buddyboss_user_like_filter', array(
 					'text' => $custom_text,
 					'link' => $custom_link
 				), $custom_link, (int) $total_items, $custom_text );
