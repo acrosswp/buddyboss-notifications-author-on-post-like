@@ -52,6 +52,24 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 	private $plugin_name_message;
 
 	/**
+	 * The Custom ID of this plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $plugin_name    The Custom ID of this plugin.
+	 */
+	private $plugin_name_action_comment;
+
+	/**
+	 * The Custom ID of this plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $plugin_name    The Custom ID of this plugin.
+	 */
+	private $plugin_name_message_comment;
+
+	/**
 	 * The version of this plugin.
 	 *
 	 * @since    1.0.0
@@ -70,8 +88,13 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
+		
 		$this->plugin_name_action = $plugin_name . '_action';
 		$this->plugin_name_message = $plugin_name . '_message';
+
+		$this->plugin_name_action_comment = $plugin_name . '_action_comment';
+		$this->plugin_name_message_comment = $plugin_name . '_message_comment';
+
 		$this->version = $version;
 
 	}
@@ -127,7 +150,32 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 			}
 			
 			return $return;
-		}	
+		}
+
+		if ( $this->plugin_name_action_comment === $action ) {
+		
+			$activity = new BP_Activity_Activity( $item_id );
+
+			$name = bp_core_get_user_displayname( $secondary_item_id );
+		
+
+			$custom_text = sprintf( esc_html__( '%s liked on your comment', 'notifications-on-post-like-for-buddyboss' ), $name );
+			$custom_link = add_query_arg( 'rid', (int) $notification_id, bp_activity_get_permalink( $item_id ) );
+
+			// WordPress Toolbar
+			if ( 'string' === $format ) {
+				$return = apply_filters( 'notifications_on_comment_like_for_buddyboss_user_like_filter', '<a href="' . esc_url( $custom_link ) . '" title="' . esc_attr( $custom_text ) . '">' . esc_html( $custom_text ) . '</a>', $custom_text, $custom_link );
+
+			// BuddyBoss Menu
+			} else {
+				$return = apply_filters( 'notifications_on_comment_like_for_buddyboss_user_like_filter', array(
+					'text' => $custom_text,
+					'link' => $custom_link
+				), $custom_link, (int) $total_items, $custom_text );
+			}
+			
+			return $return;
+		}
 
 		return $action;
 	}
@@ -141,22 +189,26 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 
 		// Get the activity from the database.
 		$activity 	= new BP_Activity_Activity( $activity_id );
-		$activity_user_id  = $activity->user_id;
 		
 		/**
 		 * Check if the notifications is active 
 		 * Check if the activity does not below to the login user and if so then do not send the notifications
 		 */
-		if ( bp_is_active( 'notifications' ) && $activity_user_id !== $user_id ) {
+		if ( bp_is_active( 'notifications' ) && ! empty( $activity->user_id ) && $activity->user_id !== $user_id ) {
+
+			$action = $this->plugin_name_action;
+			if ( 'activity_comment' == $activity->type ) {
+				$action = $this->plugin_name_action_comment;
+			}
 
 			add_action( 'bp_notification_after_save', array( $this, 'send_email' ), 100 );
 
 			bp_notifications_add_notification( array(
-				'user_id'           => $activity_user_id,
+				'user_id'           => $activity->user_id,
 				'item_id'           => $activity_id,
 				'secondary_item_id' => $user_id,
 				'component_name'    => $this->plugin_name,
-				'component_action'  => $this->plugin_name_action,
+				'component_action'  => $action,
 				'date_notified'     => bp_core_current_time(),
 			) );
 
@@ -170,6 +222,17 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 	function send_email( $notification ) {
 
 		$activity_id	= $notification->item_id;
+
+		// Get the activity from the database.
+		$activity 	= new BP_Activity_Activity( $activity_id );
+
+		$action = $this->plugin_name_action;
+		$message = $this->plugin_name_message;
+		if ( 'activity_comment' == $activity->type ) {
+			$action = $this->plugin_name_action_comment;
+			$message = $this->plugin_name_message_comment;
+		}
+		
 		$activity_url	= esc_url( bp_activity_get_permalink( $activity_id ) );
 
 		$activity_author_id = $notification->user_id;
@@ -178,23 +241,24 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 		$name = bp_core_get_user_displayname( $user_id );
 		$user_url = esc_url( bp_core_get_user_domain( $user_id ) );
 
-		if ( true === bb_is_notification_enabled( $activity_author_id, $this->plugin_name_action ) ) {
+		if ( true === bb_is_notification_enabled( $activity_author_id, $action ) ) {
 			$args                          = array(
 				'tokens' => array(
 					'poster.name'   => $name,
 					'poster_like.url'  	=> $user_url,
 					'activity.url'  => $activity_url,
+					'comment.url'  => $activity_url,
 				),
 			);
 
 			$unsubscribe_args              = array(
 				'user_id'           => $activity_author_id,
-				'notification_type' => $this->plugin_name_message,
+				'notification_type' => $message,
 			);
 
 			$args['tokens']['unsubscribe'] = esc_url( bp_email_get_unsubscribe_link( $unsubscribe_args ) );
 			// Send notification email.
-			bp_send_email( $this->plugin_name_message, $activity_author_id, $args );
+			bp_send_email( $message, $activity_author_id, $args );
 		}
 	}
 
@@ -208,6 +272,12 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 		if ( ! empty( $activity_id ) ) {
 			// Get the activity from the database.
 			$activity 	= new BP_Activity_Activity( $activity_id );
+
+			$action = $this->plugin_name_action;
+			if ( 'activity_comment' == $activity->type ) {
+				$action = $this->plugin_name_action_comment;
+			}
+		
 			$author_id  = $activity->user_id;
 			$user_id 	= bp_loggedin_user_id();
 			
@@ -217,7 +287,7 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 					$author_id, // Following user id.
 					$activity_id,
 					$this->plugin_name,
-					$this->plugin_name_action,
+					$action,
 					$user_id
 				);
 			}

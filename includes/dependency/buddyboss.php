@@ -43,7 +43,7 @@ class Notifications_On_Post_Like_For_BuddyBoss_BuddyBoss_Platform_Dependency ext
      * Load this function on plugin load hook
      */
     function mini_version(){
-        return '2.3.0';
+        return '2.5.20';
     }
 }
 
