@@ -3,8 +3,8 @@ Contributors: acrosswp, raftaar1191
 Tags: buddyboss, buddyboss-platform, like-notifications, notifications-on-post-like-for-buddyboss
 Donate link: https://acrosswp.com/
 Requires at least: 6.0
-Tested up to: 6.3
-Stable tag: 1.0.9
+Tested up to: 6.4.3
+Stable tag: 2.0.0
 Requires PHP: 5.6.20
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -39,6 +39,10 @@ Elevate your BuddyBoss community with Notifications On Post Like For BuddyBoss. 
 
 Yes.
 
+= Support BuddyBoss Platform Reactions =
+
+Yes.
+
 = Support Old version of BuddyBoss Platform =
 
 Yes.
@@ -66,6 +70,10 @@ Example 2:
 Yes.
 
 == Changelog ==
+
+= 2.0.0 =
+* Added new setting for Activite Comment Reactions
+* Added support for BuddyBoss Platform Reactions
 
 = 1.0.9 =
 * Add Plugin setting and About Plugin plugin link
