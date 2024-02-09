@@ -142,7 +142,7 @@ if ( class_exists( 'BP_Core_Notification_Abstract' ) ) {
         public function register_custom_notification_for_post() {
 
             $notification_read_only    = true;
-            $notification_tooltip_text = __( 'Requires Likes or Reactions to enable for Activity Post', 'notifications-on-post-like-for-buddyboss' );
+            $notification_tooltip_text = __( 'Requires Reactions to enable for Activity Post', 'notifications-on-post-like-for-buddyboss' );
 
             if ( 
                 function_exists( 'bp_is_activity_like_active' ) 
@@ -230,7 +230,7 @@ if ( class_exists( 'BP_Core_Notification_Abstract' ) ) {
         public function register_custom_notification_for_comment() {
 
             $notification_read_only    = true;
-            $notification_tooltip_text = __( 'Requires Likes or Reactions to enable for Activity Comment', 'notifications-on-post-like-for-buddyboss' );
+            $notification_tooltip_text = __( 'Requires Reactions to enable for Activity Comment', 'notifications-on-post-like-for-buddyboss' );
 
             if ( 
                 function_exists( 'bp_is_activity_like_active' ) 

@@ -174,7 +174,12 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 		 * Check if the notifications is active 
 		 * Check if the activity does not below to the login user and if so then do not send the notifications
 		 */
-		if ( bp_is_active( 'notifications' ) && ! empty( $activity->user_id ) && $activity->user_id !== $user_id ) {
+		if ( 
+			bp_is_active( 'notifications' ) 
+			&& ! empty( $activity->user_id ) 
+			&& $activity->user_id !== $user_id 
+			&& apply_filters( 'notifications_on_post_like_for_buddyboss_send_notification', false, $activity_id, $activity )
+		) {
 
 			$action = $this->plugin_name_action;
 			if ( 'activity_comment' == $activity->type ) {
@@ -287,5 +292,24 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 		if( class_exists( 'Notifications_On_Post_Like_For_BuddyBoss_Notification' ) ) {
 			$buddyboss_notification = new Notifications_On_Post_Like_For_BuddyBoss_Notification( $this->plugin_name );
 		}
+	}
+
+	/**
+	 * Send notification
+	 */
+	function send_notification( $value, $activity_id, $activity ) {
+
+		if( 'activity' == $activity->component ) {
+			if( 'activity_update' == $activity->type ) {
+				
+			}
+
+
+			if( 'activity_comment' == $activity->type ) {
+				
+			}
+		}
+
+		return $value;
 	}
 }
