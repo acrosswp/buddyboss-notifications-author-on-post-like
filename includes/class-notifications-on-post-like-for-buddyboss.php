@@ -284,8 +284,6 @@ final class Notifications_On_Post_Like_For_BuddyBoss {
 
 		$this->loader->add_action( 'bp_init', $plugin_public, 'bp_init', 99, 2 );
 
-		$this->loader->add_action( 'notifications_on_post_like_for_buddyboss_send_notification', $plugin_public, 'send_notification', 99, 2 );
-
 	}
 
 	/**

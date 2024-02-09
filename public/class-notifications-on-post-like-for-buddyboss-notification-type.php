@@ -165,8 +165,8 @@ if ( class_exists( 'BP_Core_Notification_Abstract' ) ) {
              */
             $this->register_notification_type(
                 $this->plugin_name_action,
-                esc_html__( 'A member like your post', 'notifications-on-post-like-for-buddyboss' ),
-                esc_html__( 'Member like some author post', 'notifications-on-post-like-for-buddyboss' ),
+                esc_html__( 'A member reacted your post', 'notifications-on-post-like-for-buddyboss' ),
+                esc_html__( 'Member reacted some author post', 'notifications-on-post-like-for-buddyboss' ),
                 $this->plugin_name,
                 function_exists( 'bp_is_activity_like_active' ) && true === bp_is_activity_like_active(),
                 $notification_read_only,
@@ -184,13 +184,13 @@ if ( class_exists( 'BP_Core_Notification_Abstract' ) ) {
                 $this->plugin_name_message,
                 array(
                     /* translators: do not remove {} brackets or translate its contents. */
-                    'email_title'         => __( '[{{{site.name}}}] {{poster.name}} like your Activity', 'notifications-on-post-like-for-buddyboss' ),
+                    'email_title'         => __( '[{{{site.name}}}] {{poster.name}} reacted your Activity', 'notifications-on-post-like-for-buddyboss' ),
                     /* translators: do not remove {} brackets or translate its contents. */
-                    'email_content'       => __( "<a href=\"{{{poster_like.url}}}\">{{poster.name}}</a> have like your <a href=\"{{{activity.url}}}\">Activity</a>", 'notifications-on-post-like-for-buddyboss' ),
+                    'email_content'       => __( "<a href=\"{{{poster_like.url}}}\">{{poster.name}}</a> have reacted your <a href=\"{{{activity.url}}}\">Activity</a>", 'notifications-on-post-like-for-buddyboss' ),
                     /* translators: do not remove {} brackets or translate its contents. */
-                    'email_plain_content' => __( "{{poster.name}} have like your Activity.\n\Activity link: {{{activity.url}}}", 'notifications-on-post-like-for-buddyboss' ),
-                    'situation_label'     => __( 'A posts author get like by members', 'notifications-on-post-like-for-buddyboss' ),
-                    'unsubscribe_text'    => __( 'You will no longer receive emails when someone like your posts.', 'notifications-on-post-like-for-buddyboss' ),
+                    'email_plain_content' => __( "{{poster.name}} have reacted your Activity.\n\Activity link: {{{activity.url}}}", 'notifications-on-post-like-for-buddyboss' ),
+                    'situation_label'     => __( 'A posts author get reacted by members', 'notifications-on-post-like-for-buddyboss' ),
+                    'unsubscribe_text'    => __( 'You will no longer receive emails when someone reacted your posts.', 'notifications-on-post-like-for-buddyboss' ),
                 ),
                 $this->plugin_name_action
             );
@@ -253,8 +253,8 @@ if ( class_exists( 'BP_Core_Notification_Abstract' ) ) {
              */
             $this->register_notification_type(
                 $this->plugin_name_action_comment,
-                esc_html__( 'A member like your comment', 'notifications-on-post-like-for-buddyboss' ),
-                esc_html__( 'Member like some author comment', 'notifications-on-post-like-for-buddyboss' ),
+                esc_html__( 'A member reacted your comment', 'notifications-on-post-like-for-buddyboss' ),
+                esc_html__( 'Member reacted some author comment', 'notifications-on-post-like-for-buddyboss' ),
                 $this->plugin_name,
                 function_exists( 'bp_is_activity_like_active' ) && true === bp_is_activity_like_active(),
                 $notification_read_only,
@@ -272,13 +272,13 @@ if ( class_exists( 'BP_Core_Notification_Abstract' ) ) {
                 $this->plugin_name_message_comment,
                 array(
                     /* translators: do not remove {} brackets or translate its contents. */
-                    'email_title'         => __( '[{{{site.name}}}] {{poster.name}} like your Comments', 'notifications-on-post-like-for-buddyboss' ),
+                    'email_title'         => __( '[{{{site.name}}}] {{poster.name}} reacted your Comments', 'notifications-on-post-like-for-buddyboss' ),
                     /* translators: do not remove {} brackets or translate its contents. */
-                    'email_content'       => __( "<a href=\"{{{poster_like.url}}}\">{{poster.name}}</a> have like your <a href=\"{{{comment.url}}}\">Comment</a>", 'notifications-on-post-like-for-buddyboss' ),
+                    'email_content'       => __( "<a href=\"{{{poster_like.url}}}\">{{poster.name}}</a> have reacted your <a href=\"{{{comment.url}}}\">Comment</a>", 'notifications-on-post-like-for-buddyboss' ),
                     /* translators: do not remove {} brackets or translate its contents. */
-                    'email_plain_content' => __( "{{poster.name}} have like your Comment.\n\Comment link: {{{activity.url}}}", 'notifications-on-post-like-for-buddyboss' ),
-                    'situation_label'     => __( 'A comments author get like by members', 'notifications-on-post-like-for-buddyboss' ),
-                    'unsubscribe_text'    => __( 'You will no longer receive emails when someone like your comment.', 'notifications-on-post-like-for-buddyboss' ),
+                    'email_plain_content' => __( "{{poster.name}} have reacted your Comment.\n\Comment link: {{{activity.url}}}", 'notifications-on-post-like-for-buddyboss' ),
+                    'situation_label'     => __( 'A comments author get reacted by members', 'notifications-on-post-like-for-buddyboss' ),
+                    'unsubscribe_text'    => __( 'You will no longer receive emails when someone reacted your comment.', 'notifications-on-post-like-for-buddyboss' ),
                 ),
                 $this->plugin_name_action_comment
             );

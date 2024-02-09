@@ -96,7 +96,6 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 		$this->plugin_name_message_comment = $plugin_name . '_message_comment';
 
 		$this->version = $version;
-
 	}
 
 	/**
@@ -124,12 +123,15 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 	 * 
 	 * @since 1.0.0
 	 */
-	function format_notifications( $action, $item_id, $secondary_item_id, $total_items, $format = 'string', $main_action, $screen, $notification_id ) {
+	function format_notifications( $action, $item_id, $secondary_item_id, $total_items, $format = 'string', $main_action = '', $screen = '', $notification_id = '' ) {
 
 		// New custom notifications
 		if ( 
-			$this->plugin_name_action === $action 
-			|| $this->plugin_name_action_comment === $action 
+			! empty( $notification_id )
+			&& (
+				$this->plugin_name_action === $action 
+				|| $this->plugin_name_action_comment === $action 
+			)
 		) {
 			$activity = new BP_Activity_Activity( $item_id );
 			$name = bp_core_get_user_displayname( $secondary_item_id );
@@ -177,12 +179,11 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 		if ( 
 			bp_is_active( 'notifications' ) 
 			&& ! empty( $activity->user_id ) 
-			&& $activity->user_id !== $user_id 
-			&& apply_filters( 'notifications_on_post_like_for_buddyboss_send_notification', false, $activity_id, $activity )
+			&& $activity->user_id !== $user_id
 		) {
 
 			$action = $this->plugin_name_action;
-			if ( 'activity_comment' == $activity->type ) {
+			if ( $this->types( $activity->type ) ) {
 				$action = $this->plugin_name_action_comment;
 			}
 
@@ -213,7 +214,7 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 
 		$action = $this->plugin_name_action;
 		$message = $this->plugin_name_message;
-		if ( 'activity_comment' == $activity->type ) {
+		if ( $this->types( $activity->type ) ) {
 			$action = $this->plugin_name_action_comment;
 			$message = $this->plugin_name_message_comment;
 		}
@@ -259,7 +260,7 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 			$activity 	= new BP_Activity_Activity( $activity_id );
 
 			$action = $this->plugin_name_action;
-			if ( 'activity_comment' == $activity->type ) {
+			if ( $this->types( $activity->type ) ) {
 				$action = $this->plugin_name_action_comment;
 			}
 		
@@ -279,6 +280,10 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 		}
 	}
 
+	function types( $current_type ) {
+		return in_array( $current_type, array( 'activity_comment', 'activity_update' ) );
+	}
+
 	/**
 	 * Load file on BP init Hooks
 	 */
@@ -292,24 +297,5 @@ class Notifications_On_Post_Like_For_BuddyBoss_Public {
 		if( class_exists( 'Notifications_On_Post_Like_For_BuddyBoss_Notification' ) ) {
 			$buddyboss_notification = new Notifications_On_Post_Like_For_BuddyBoss_Notification( $this->plugin_name );
 		}
-	}
-
-	/**
-	 * Send notification
-	 */
-	function send_notification( $value, $activity_id, $activity ) {
-
-		if( 'activity' == $activity->component ) {
-			if( 'activity_update' == $activity->type ) {
-				
-			}
-
-
-			if( 'activity_comment' == $activity->type ) {
-				
-			}
-		}
-
-		return $value;
 	}
 }
